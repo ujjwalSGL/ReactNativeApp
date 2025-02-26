@@ -1,172 +1,140 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { View, TouchableOpacity, Alert } from "react-native";
-import { useState } from "react";
+import { TouchableOpacity, View } from "react-native";
 import { Image } from "react-native";
+import SafeViewAndroid from "@/components/SafeViewAndroid";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@/components/ui/text";
-import { loginUser } from "@/api/LoginApiClient";
-import { router } from "expo-router";
+import Login from "./Login";
 
 export default function Index() {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
-  const onChangeText = (key: string, value: string) => {
-    setData((prevData) => ({ ...prevData, [key]: value }));
-    if (key === "email") setEmailError("");
-    if (key === "password") setPasswordError("");
-    if (errorMessage) setErrorMessage("");
-  };
-
-  const validateForm = () => {
-    let isValid = true;
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!data.email) {
-      setEmailError("Email is required");
-      isValid = false;
-    } else if (!emailRegex.test(data.email)) {
-      setEmailError("Must be a valid email address");
-      isValid = false;
-    }
-
-    if (!data.password) {
-      setPasswordError("Password is required");
-      isValid = false;
-    } else if (data.password.length < 6) {
-      setPasswordError("Password must be 6 or more characters long");
-      isValid = false;
-    }
-
-    return isValid;
-  };
-
-  const handleLogin = async () => {
-    setErrorMessage("");
-    if (!validateForm()) return;
-
-    setLoading(true);
-    try {
-      const response = await loginUser(data);
-      console.log("Login Successful:", response);
-      router.replace("/dashBoard");
-    } catch (error: any) {
-      console.error("Login Failed:", error);
-      setErrorMessage(error.message || "Wrong email or password. Try again");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleForgotPassword = () => {
-    alert("Forgot Password");
-  };
-
   return (
-    <View className="h-full bg-blue-100">
-      <View className="flex items-center justify-center m-10 lg:mt-10 lg:ml-20 md:items-start lg:items-start">
-        <Image
-          source={require("@/assets/images/companyIcon.png")}
-          style={{ width: 200, height: 40 }}
-          className="flex justify-center"
-        />
-      </View>
-      <View className="flex items-center justify-center h-full mx-4 -mt-28">
-        <Card className="w-full max-w-md pt-10 pb-24 bg-white border border-white rounded-lg shadow-sm">
-          <CardHeader>
-            <Text className="flex items-center justify-center text-2xl font-semibold text-center">
-              Login
-            </Text>
-          </CardHeader>
-          <View className="mt-6">
-            <View className="px-8">
-              <Text className="font-semibold text-md">
-                Email <Text className="text-red-500">*</Text>
-              </Text>
-              <View className="flex items-center justify-center pt-1">
-                <Input
-                  placeholder="Enter Email ID..."
-                  value={data.email}
-                  onChangeText={(value) => onChangeText("email", value)}
-                  aria-labelledby="inputLabel"
-                  aria-errormessage="inputError"
-                  className="flex w-full h-12 max-w-sm pl-4 placeholder-gray-400 border-gray-300 rounded-md text-md"
-                  inputMode="email"
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                />
-              </View>
-              {emailError ? (
-                <View className="mt-1">
-                  <Text className="text-sm font-semibold text-red-600">
-                    {emailError}
-                  </Text>
-                </View>
-              ) : null}
-            </View>
-            <View className="px-8 mt-4">
-              <Text className="font-semibold text-md">
-                Password <Text className="text-red-500">*</Text>
-              </Text>
-              <View className="flex items-center justify-center pt-1">
-                <Input
-                  placeholder="Type here..."
-                  value={data.password}
-                  onChangeText={(value) => onChangeText("password", value)}
-                  aria-labelledby="inputLabel"
-                  aria-errormessage="inputError"
-                  className="flex w-full h-12 max-w-sm pl-4 text-sm placeholder-gray-400 border border-gray-300 rounded-md"
-                  secureTextEntry={true}
-                />
-              </View>
-              {passwordError && (
-                <View className="mt-1">
-                  <Text className="text-sm font-semibold text-red-600">
-                    {passwordError}
-                  </Text>
-                </View>
-              )}
-            </View>
-          </View>
-          <TouchableOpacity onPress={handleForgotPassword}>
-            <Text className="mx-8 mt-2 font-semibold text-blue-800 cursor-pointer text-md hover:underline">
-              Forgot Password?
-            </Text>
-          </TouchableOpacity>
+    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+      <View className="h-full">
+        <View className="flex items-center justify-center m-10 lg:mt-10 lg:ml-20 md:items-start lg:items-start">
+          <Image
+            source={require("@/assets/images/companyIcon.png")}
+            style={{ width: 200, height: 50 }}
+            className="flex justify-center"
+          />
+        </View>
 
-          {errorMessage && (
-            <View className="mx-8 mt-2">
-              <Text className="text-sm font-semibold text-red-600">
-                {errorMessage}
-              </Text>
-            </View>
-          )}
-
-          <View className="mx-8 mt-4">
-            <Button
-              className="w-full h-12 mt-6 font-semibold bg-blue-900 rounded-md"
-              onPress={handleLogin}
-              disabled={loading}
-            >
-              <Text className="text-white">
-                {loading ? (
-                  <AntDesign name="loading1" size={24} color="white" />
-                ) : (
-                  "Submit"
-                )}
-              </Text>
-            </Button>
-          </View>
-        </Card>
+        <Login />
+        {/* <View className="justify-center flex-1 p-6">
+          <Tabs
+            value={value}
+            onValueChange={setValue}
+            className="w-full mx-auto flex-col gap-1.5"
+          >
+            <TabsList className="flex-row w-full">
+              <TabsTrigger value="email" className="flex-1">
+                <TouchableOpacity>
+                  <Text className="text-lg font-semibold">Email</Text>
+                </TouchableOpacity>
+              </TabsTrigger>
+              <TabsTrigger value="phone" className="flex-1">
+                <TouchableOpacity>
+                  <Text className="text-lg font-semibold">Phone</Text>
+                </TouchableOpacity>
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="email">
+              <Login />
+            </TabsContent>
+            <TabsContent value="phone"></TabsContent>
+          </Tabs>
+        </View> */}
+        {/* <View className="justify-center flex-1 p-6">
+          <Tabs
+            value={value}
+            onValueChange={setValue}
+            className="w-full max-w-[400px] mx-auto flex-col gap-1.5"
+          >
+            <TabsList className="flex-row w-full">
+              <TabsTrigger value="account" className="flex-1">
+                <Text>Account</Text>
+              </TabsTrigger>
+              <TabsTrigger value="password" className="flex-1">
+                <Text>Password</Text>
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="account">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Account</CardTitle>
+                  <CardDescription>
+                    Make changes to your account here. Click save when you're
+                    done.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="gap-4 native:gap-2">
+                  <View className="gap-1">
+                    <Label nativeID="name">Name</Label>
+                    <Input
+                      aria-aria-labelledby="name"
+                      defaultValue="Pedro Duarte"
+                    />
+                  </View>
+                  <View className="gap-1">
+                    <Label nativeID="username">Username</Label>
+                    <Input id="username" defaultValue="@peduarte" />
+                  </View>
+                </CardContent>
+                <CardFooter>
+                  <Button>
+                    <Text>Save changes</Text>
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+            <TabsContent value="password">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Password</CardTitle>
+                  <CardDescription>
+                    Change your password here. After saving, you'll be logged
+                    out.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="gap-4 native:gap-2">
+                  <View className="gap-1">
+                    <Label nativeID="current">Current password</Label>
+                    <Input
+                      placeholder="********"
+                      aria-labelledby="current"
+                      secureTextEntry
+                    />
+                  </View>
+                  <View className="gap-1">
+                    <Label nativeID="new">New password</Label>
+                    <Input
+                      placeholder="********"
+                      aria-labelledby="new"
+                      secureTextEntry
+                    />
+                  </View>
+                </CardContent>
+                <CardFooter>
+                  <Button>
+                    <Text>Save password</Text>
+                  </Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </View> */}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
