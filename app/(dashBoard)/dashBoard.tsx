@@ -1,80 +1,86 @@
-import { View, Text, TouchableOpacity, Modal } from "react-native";
+import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { Image } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import EvilIcons from "@expo/vector-icons/EvilIcons";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Animated, { FadeIn } from "react-native-reanimated";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { router } from "expo-router";
-const contentInsets = {
-  top: 10,
-  bottom: 10,
-  left: 10,
-  right: 10,
-};
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 
 export default function dashBoard() {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const handleLogout = () => {
-    router.replace("/(auth)");
-  };
   return (
     // <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
-    <View className="mt-10 lg:mt-0">
+    <View className="mt-8" style={{ flex: 1 }}>
       {/* //Header */}
-      <View className="flex flex-row justify-between px-4 py-2 border-b border-gray-200">
+      <View className="flex flex-row items-center justify-between px-4 py-2 border-b border-gray-200">
         <Image
-          source={require("@/assets/images/companyIcon.png")}
-          style={{ width: 100, height: 30, aspectRatio: 4 }}
+          source={require("@/assets/images/companyheader.png")}
+          style={{ width: 60, height: 100, aspectRatio: 4 }}
           className="flex justify-center"
         />
-        <TouchableOpacity onPress={() => setMenuVisible(true)}>
-          <MaterialCommunityIcons name="menu" size={28} color="black" />
+        <TouchableOpacity className="flex-row items-center gap-2 p-2 bg-white rounded-lg">
+          <SimpleLineIcons name="wallet" size={24} color="black" />
+          <Text className="text-sm">₹ 1000</Text>
         </TouchableOpacity>
-        <Modal
-          visible={menuVisible}
-          transparent={true}
-          onRequestClose={() => setMenuVisible(false)}
-        >
-          <TouchableOpacity
-            className="flex-1 bg-black/50"
-            onPress={() => setMenuVisible(false)}
-          >
-            <View className="absolute top-12 right-5 bg-white rounded p-2.5">
-              <TouchableOpacity className="flex-row items-center p-2.5">
-                <MaterialIcons name="person-outline" size={20} color="black" />
-                <Text className="ml-2.5">My Account</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                className="flex-row items-center p-2.5"
-                onPress={handleLogout}
-              >
-                <MaterialIcons name="logout" size={20} color="black" />
-                <Text className="ml-2.5">Log out</Text>
-              </TouchableOpacity>
+      </View>
+      <ScrollView scrollEnabled={true}>
+        <View className="mb-4">
+          {/* Hero Section */}
+          <View className="gap-4 px-4 mt-2">
+            <View className="flex items-center justify-center">
+              <Text className="text-lg font-bold ">Dashboard</Text>
             </View>
-          </TouchableOpacity>
-        </Modal>
-      </View>
-      {/* Hero Section */}
-      <View className="gap-4 px-2">
-        <Card className="items-center justify-center mt-4 bg-white border-gray-300 min-h-96">
-          <Text>Primary Section</Text>
-        </Card>
+            <Card className="bg-white border-gray-300 min-h-96">
+              <View className="flex items-center justify-center py-5 border-b border-gray-300">
+                <Text className="text-xl font-semibold">₹1561.41</Text>
+                <Text className="flex items-center justify-center gap-1 p-1 mt-1 text-xs font-medium bg-orange-100 border border-orange-300 rounded-lg">
+                  <MaterialCommunityIcons
+                    name="treasure-chest"
+                    size={20}
+                    color="orange"
+                  />
+                  TODAY EARNING
+                </Text>
+              </View>
 
-        <Card className="items-center justify-center bg-white border-gray-300 min-h-52">
-          <Text>Secondary Section</Text>
-        </Card>
-      </View>
+              <View className="flex flex-row items-center border-b border-gray-300 justify-evenly">
+                <View className="gap-1 p-5 border-r border-gray-300">
+                  <Text className="p-1 mt-1 text-xs font-medium ">
+                    Total Amount Collected
+                  </Text>
+                  <Text className="text-xl font-bold ">₹40,000</Text>
+                </View>
+                <View className="gap-1 p-5">
+                  <Text className="p-1 mt-1 text-xs font-medium ">
+                    Total Distance Covered
+                  </Text>
+                  <Text className="text-xl font-bold">1.2KM</Text>
+                </View>
+              </View>
+              <View className="flex flex-row items-center gap-2 border-b border-gray-300 justify-evenly">
+                <View className="gap-1 p-5 -mr-4 border-r border-gray-300">
+                  <Text className="p-1 mt-1 text-xs font-medium">
+                    Total Order Delivered
+                  </Text>
+                  <Text className="text-xl font-bold">30</Text>
+                </View>
+                <View className="gap-1 p-5">
+                  <Text className="p-1 mt-1 text-xs font-medium">
+                    Total Order Rejected
+                  </Text>
+                  <Text className="text-xl font-bold">3</Text>
+                </View>
+              </View>
+            </Card>
+            <Card className="items-center justify-center gap-2 bg-white border-gray-300 min-h-52">
+              <MaterialCommunityIcons
+                name="timer-sand"
+                size={32}
+                color="black"
+              />
+              <Text>waiting for the order...</Text>
+            </Card>
+          </View>
+        </View>
+      </ScrollView>
     </View>
     // </SafeAreaView>
   );

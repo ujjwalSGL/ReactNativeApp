@@ -1,27 +1,14 @@
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { Image } from "react-native";
 import SafeViewAndroid from "@/components/SafeViewAndroid";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Text } from "@/components/ui/text";
+import React from "react";
 import Login from "./Login";
 
 export default function Index() {
   return (
     <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
-      <View className="h-full">
+      <View className="h-full bg-gradient-to-r from-blue-200 via-orange-200 to-pink-200">
         <View className="flex items-center justify-center m-10 lg:mt-10 lg:ml-20 md:items-start lg:items-start">
           <Image
             source={require("@/assets/images/companyIcon.png")}

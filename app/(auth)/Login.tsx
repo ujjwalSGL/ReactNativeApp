@@ -68,10 +68,10 @@ export default function Login() {
 
   return (
     <View className="flex items-center justify-center h-full mx-4 -mt-28">
-      <Card className="w-full max-w-md pt-10 pb-24 border border-white rounded-lg shadow-sm bg-gray-50">
+      <Card className="w-full max-w-md pt-4 border border-white rounded-lg shadow-sm pb-36 bg-gray-50">
         <CardHeader>
           <Text className="flex items-center justify-center text-2xl font-semibold text-center">
-            Login with email
+            Login
           </Text>
         </CardHeader>
         <View className="mt-6">
@@ -86,7 +86,7 @@ export default function Login() {
                 onChangeText={(value) => onChangeText("email", value)}
                 aria-labelledby="inputLabel"
                 aria-errormessage="inputError"
-                className="flex w-full h-12 max-w-sm pl-4 placeholder-gray-400 bg-white border-gray-300 rounded-md text-md"
+                className="flex w-full h-12 max-w-sm pl-4 text-lg placeholder-gray-400 bg-white border-gray-300 rounded-md"
                 inputMode="email"
                 autoCapitalize="none"
                 keyboardType="email-address"

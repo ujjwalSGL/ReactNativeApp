@@ -34,7 +34,9 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "light" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider
+      value={colorScheme === "light" ? DefaultTheme : DefaultTheme}
+    >
       <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(dashBoard)" options={{ headerShown: false }} />
