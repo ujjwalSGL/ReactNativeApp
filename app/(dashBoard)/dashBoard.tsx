@@ -1,21 +1,22 @@
 import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Image } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Card } from "@/components/ui/card";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import Header from "@/components/Header";
 
-export default function dashBoard() {
+export default function Dashboard() {
   return (
-    // <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
-    <View className="mt-8" style={{ flex: 1 }}>
+    <View className="mt-6" style={{ flex: 1 }}>
       {/* //Header */}
       <View className="flex flex-row items-center justify-between px-4 py-2 border-b border-gray-200">
-        <Image
+        {/* <Image
           source={require("@/assets/images/companyheader.png")}
-          style={{ width: 60, height: 100, aspectRatio: 4 }}
+          style={{ width: 50, height: 50, aspectRatio: 4 }}
           className="flex justify-center"
-        />
+        /> */}
+        <Header />
         <TouchableOpacity className="flex-row items-center gap-2 p-2 bg-white rounded-lg">
           <SimpleLineIcons name="wallet" size={24} color="black" />
           <Text className="text-sm">₹ 1000</Text>
@@ -31,12 +32,7 @@ export default function dashBoard() {
             <Card className="bg-white border-gray-300 min-h-96">
               <View className="flex items-center justify-center py-5 border-b border-gray-300">
                 <Text className="text-xl font-semibold">₹1561.41</Text>
-                <Text className="flex items-center justify-center gap-1 p-1 mt-1 text-xs font-medium bg-orange-100 border border-orange-300 rounded-lg">
-                  <MaterialCommunityIcons
-                    name="treasure-chest"
-                    size={20}
-                    color="orange"
-                  />
+                <Text className="flex flex-row items-center justify-center gap-1 p-1 mt-1 text-xs font-medium bg-orange-100 border border-orange-300 rounded-lg">
                   TODAY EARNING
                 </Text>
               </View>
@@ -82,6 +78,5 @@ export default function dashBoard() {
         </View>
       </ScrollView>
     </View>
-    // </SafeAreaView>
   );
 }

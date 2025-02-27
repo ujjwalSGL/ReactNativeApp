@@ -7,6 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { loginUser } from "@/api/LoginApiClient";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 export default function Login() {
   const [data, setData] = useState({
     email: "",
@@ -53,13 +56,23 @@ export default function Login() {
     try {
       const response = await loginUser(data);
       console.log("Login Successful:", response);
-      router.replace("/(dashBoard)/dashBoard");
+
+      await AsyncStorage.setItem(
+        "userToken",
+        response.data.token_details.token
+      );
+
+      router.replace("/(dashBoard)/dashboard");
     } catch (error: any) {
       console.error("Login Failed:", error);
       setErrorMessage(error.message || "Wrong email or password. Try again");
     } finally {
       setLoading(false);
     }
+  };
+  const [showPassword, setShowPassword] = useState(true);
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleForgotPassword = () => {
@@ -86,7 +99,7 @@ export default function Login() {
                 onChangeText={(value) => onChangeText("email", value)}
                 aria-labelledby="inputLabel"
                 aria-errormessage="inputError"
-                className="flex w-full h-12 max-w-sm pl-4 text-lg placeholder-gray-400 bg-white border-gray-300 rounded-md"
+                className="flex w-full h-12 max-w-sm pl-4 text-base placeholder-gray-400 bg-white border-gray-300 rounded-md"
                 inputMode="email"
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -104,16 +117,26 @@ export default function Login() {
             <Text className="font-semibold text-md">
               Password <Text className="text-red-500">*</Text>
             </Text>
-            <View className="flex items-center justify-center pt-1">
+            <View className="relative flex items-center justify-center pt-1">
               <Input
                 placeholder="Type here..."
                 value={data.password}
                 onChangeText={(value) => onChangeText("password", value)}
                 aria-labelledby="inputLabel"
                 aria-errormessage="inputError"
-                className="flex w-full h-12 max-w-sm pl-4 text-sm placeholder-gray-400 bg-white border border-gray-300 rounded-md"
-                secureTextEntry={true}
+                className="flex w-full h-12 max-w-sm pl-4 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md"
+                secureTextEntry={showPassword}
               />
+              <TouchableOpacity
+                onPress={handleShowPassword}
+                className="absolute right-5"
+              >
+                {showPassword ? (
+                  <Ionicons name="eye-off-outline" size={24} color="black" />
+                ) : (
+                  <Ionicons name="eye-outline" size={24} color="black" />
+                )}
+              </TouchableOpacity>
             </View>
             {passwordError && (
               <View className="mt-1">

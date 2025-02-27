@@ -21,13 +21,13 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen
+          name="dashboard"
           options={{
             title: "Home",
             tabBarIcon: ({ color, focused }) => (
               <Ionicons name="home-sharp" size={24} color="black" />
             ),
           }}
-          name="dashBoard"
         />
         <Tabs.Screen
           name="navigate"
