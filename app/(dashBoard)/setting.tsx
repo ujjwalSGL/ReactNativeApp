@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "expo-router";
 import { logoutUser } from "@/api/LoginApiClient";
+import Layout from "@/layouts/ScreenLayout";
 
 export default function Setting() {
   const router = useRouter();
@@ -12,10 +13,12 @@ export default function Setting() {
   };
 
   return (
-    <View className="items-center justify-center flex-1 h-full">
-      <Button onPress={handleLogout} className="text-white bg-blue-950">
-        <Text className="text-white">Logout</Text>
-      </Button>
-    </View>
+    <Layout>
+      <View className="items-center justify-center flex-1 h-full">
+        <Button onPress={handleLogout} className="text-white bg-blue-950">
+          <Text className="text-white">Logout</Text>
+        </Button>
+      </View>
+    </Layout>
   );
 }

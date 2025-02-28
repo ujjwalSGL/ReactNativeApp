@@ -8,7 +8,7 @@ type LayoutWithHeaderProps = {
   children: React.ReactNode;
 };
 
-export default function LayoutWithHeader({ children }: LayoutWithHeaderProps) {
+export default function Layout({ children }: LayoutWithHeaderProps) {
   return (
     <View className="flex-1">
       <SafeAreaProvider>
