@@ -1,10 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, Image } from "react-native";
+import React from "react";
+import Layout from "@/layouts/ScreenLayout";
 
 export default function Navigate() {
   return (
-    <View className='items-center justify-center flex-1 h-full'>
-      <Text>Navigate</Text>
-    </View>
-  )
+    <Layout>
+      <View className="items-center justify-center">
+        <Image
+          source={require("@/assets/images/googleMap.jpg")}
+          style={{ height: 700, resizeMode: "cover" }}
+        />
+      </View>
+    </Layout>
+  );
 }

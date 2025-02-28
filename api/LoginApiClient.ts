@@ -1,65 +1,12 @@
-// import axios from "axios";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// const apiClient = axios.create({
-//   baseURL: "https://api.fr.stg.shipglobal.in/api/v1/auth",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   timeout: 5000,
-// });
-
-// interface LoginParams {
-//   email: string;
-//   password: string;
-// }
-
-// export const loginUser = async (credentials: LoginParams): Promise<any> => {
-//   try {
-//     const response = await apiClient.post("/login", credentials);
-//     const token = response.data.data.token_details.token;
-
-//     if (token) {
-//       await AsyncStorage.setItem("userToken", token);
-//       apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-//     }
-
-//     return response.data;
-//   } catch (error: any) {
-//     console.error("Login Error:", error.response?.data || error.message);
-//     throw new Error(error.response?.data?.message || "Login failed");
-//   }
-// };
-
-// export const logoutUser = async () => {
-//   await AsyncStorage.removeItem("userToken");
-//   delete apiClient.defaults.headers.common["Authorization"];
-// };
-
-// export const checkLoginStatus = async () => {
-//   const token = await AsyncStorage.getItem("userToken");
-//   if (token) {
-//     apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-//     return true;
-//   }
-//   return false;
-// };
-
-// export const apiService = {
-//   loginUser,
-//   logoutUser,
-//   checkLoginStatus,
-// };
-
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: "https://api.fr.stg.shipglobal.in/api/v1/auth",
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 5000,
+  timeout: 10000,
 });
 
 interface LoginParams {
