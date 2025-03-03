@@ -1,16 +1,47 @@
-import { View, Text, Image } from "react-native";
 import React from "react";
+import { Image, Platform, View } from "react-native";
+import MapView from "@/components/mymap";
 import Layout from "@/layouts/ScreenLayout";
 
 export default function Navigate() {
   return (
     <Layout>
-      <View className="items-center justify-center flex-1">
+      {Platform.OS === "web" ? (
         <Image
           source={require("@/assets/images/googleMap.jpg")}
-          style={{ height: 670, width: 1500, resizeMode: "cover" }}
+          style={{
+            resizeMode: "cover",
+            flex: 1,
+            width: "auto",
+            height: "auto",
+          }}
         />
-      </View>
+      ) : (
+        <View style={{ flex: 1 }}>
+          <MapView
+            // provider={PROVIDER_DEFAULT}
+            style={{ flex: 1 }}
+            initialRegion={{
+              latitude: 28.6139,
+              longitude: 77.209,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            mapType="standard"
+            showsUserLocation={true}
+            showsCompass={true}
+            showsTraffic={true}
+          >
+            {/* <Marker
+            coordinate={{
+              latitude: 28.6139,
+              longitude: 77.209,
+            }}
+            title="New Delhi"
+          /> */}
+          </MapView>
+        </View>
+      )}
     </Layout>
   );
 }

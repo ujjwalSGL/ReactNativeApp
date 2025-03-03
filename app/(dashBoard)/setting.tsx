@@ -14,11 +14,9 @@ export default function Setting() {
 
   return (
     <Layout>
-      <View className="items-center justify-center flex-1 h-full">
-        <Button onPress={handleLogout} className="text-white bg-blue-950">
-          <Text className="text-white">Logout</Text>
-        </Button>
-      </View>
+      <Button onPress={handleLogout} className="text-white bg-blue-950">
+        <Text className="text-white">Logout</Text>
+      </Button>
     </Layout>
   );
 }
