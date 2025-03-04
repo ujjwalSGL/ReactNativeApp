@@ -115,7 +115,7 @@ export default function Login() {
         {isForgotPassword ? (
           <View>
             <CardHeader>
-              <Text className="flex items-center justify-center mt-8 text-xl font-semibold text-center">
+              <Text className="flex items-center justify-center mt-4 text-xl font-semibold text-center">
                 Login
               </Text>
             </CardHeader>
@@ -305,10 +305,10 @@ export default function Login() {
                     </Button>
                   </View>
                   <TouchableOpacity
-                    className="flex items-center justify-center w-full h-12 mt-3 font-semibold rounded-md"
+                    className="flex items-center justify-center w-full font-semibold"
                     onPress={handleForgotPassword}
                   >
-                    <Text className="text-lg font-medium text-blue-900 hover:underline">
+                    <Text className="mt-3 text-lg font-medium text-blue-900 hover:underline">
                       Return to login
                     </Text>
                   </TouchableOpacity>

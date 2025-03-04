@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { checkLoginStatus } from "@/api/LoginApiClient";
+import { Platform } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -43,12 +44,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      {isLoggedIn ? (
-        <Redirect href="/(dashBoard)/dashboard" />
+      {Platform.OS === "web" ? (
+        isLoggedIn ? (
+          <Redirect href="/(dashBoard)/dashboard" />
+        ) : (
+          <Redirect href="/(dashBoard)/dashboard" />
+        )
       ) : (
-        <Redirect href="/(auth)" />
+        <Redirect href="/(splashScreen)/onboarding" />
       )}
       <Stack>
+        <Stack.Screen name="(splashScreen)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(dashBoard)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
