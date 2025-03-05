@@ -51,7 +51,6 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(dashBoard)" options={{ headerShown: false }} />
-        <Stack.Screen name="(setting)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
         <PortalHost />
       </Stack>

@@ -6,7 +6,6 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
-import { PortalHost } from "@rn-primitives/portal";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -49,7 +48,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      <PortalHost />
     </ThemeProvider>
   );
 }
