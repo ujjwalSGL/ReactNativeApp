@@ -5,10 +5,10 @@ import Layout from "@/layouts/ScreenLayout";
 export default function Navigate() {
   return (
     <Layout>
-      <View className="items-center justify-center">
+      <View className="items-center justify-center flex-1">
         <Image
           source={require("@/assets/images/googleMap.jpg")}
-          style={{ height: 700, resizeMode: "cover" }}
+          style={{ height: 670, width: 1500, resizeMode: "cover" }}
         />
       </View>
     </Layout>

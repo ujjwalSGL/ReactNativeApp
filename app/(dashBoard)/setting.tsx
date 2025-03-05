@@ -1,25 +1,3 @@
-// import { View, Text } from "react-native";
-// import React from "react";
-// import { Button } from "@/components/ui/button";
-// import { useRouter } from "expo-router";
-// import { logoutUser } from "@/api/LoginApiClient";
-
-// export default function Setting() {
-//   const router = useRouter();
-//   const handleLogout = async () => {
-//     await logoutUser();
-//     router.replace("/(auth)");
-//   };
-
-//   return (
-//     <View className="items-center justify-center flex-1 h-full">
-//       <Button onPress={handleLogout} className="text-white bg-blue-950">
-//         <Text className="text-white">Logout</Text>
-//       </Button>
-//     </View>
-//   );
-// }
-
 import {
   View,
   Text,
@@ -41,12 +19,14 @@ import {
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { logoutUser } from "@/api/LoginApiClient";
+
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/ui/button";
+import Layout from "@/layouts/ScreenLayout";
 export default function Setting() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -68,7 +48,7 @@ export default function Setting() {
     }, 500);
   }, []);
   return (
-    <SafeAreaView>
+     <Layout>
       <View>
         <ImageBackground
           source={require("@/assets/images/profile-bg.jpg")}
@@ -185,6 +165,6 @@ export default function Setting() {
           </AlertDialog>
         </View>
       )}
-    </SafeAreaView>
+    </Layout>
   );
 }
