@@ -6,6 +6,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -39,11 +40,24 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="setting"
+          name="history"
           options={{
             title: "Setting",
             tabBarIcon: ({ color, focused }) => (
               <Ionicons name="settings" size={24} color="black" />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="setting"
+          options={{
+            title: "History",
+            tabBarIcon: ({ color, focused }) => (
+              <MaterialIcons
+                name="account-balance-wallet"
+                size={24}
+                color="black"
+              />
             ),
           }}
         />
