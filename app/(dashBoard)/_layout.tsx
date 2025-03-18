@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {
-  DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
@@ -22,7 +21,7 @@ export default function TabLayout() {
         }}
       >
         <Tabs.Screen
-          name="dashboard"
+          name="dashBoard"
           options={{
             title: "Home",
             tabBarIcon: ({ color, focused }) => (
@@ -42,15 +41,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="history"
           options={{
-            title: "Setting",
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons name="settings" size={24} color="black" />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="setting"
-          options={{
             title: "History",
             tabBarIcon: ({ color, focused }) => (
               <MaterialIcons
@@ -58,6 +48,15 @@ export default function TabLayout() {
                 size={24}
                 color="black"
               />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="setting"
+          options={{
+            title: "Setting",
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons name="settings" size={24} color="black" />
             ),
           }}
         />

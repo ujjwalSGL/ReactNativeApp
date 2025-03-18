@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -65,7 +65,7 @@ export default function Login() {
         "userToken",
         response.data.token_details.token
       );
-      router.replace("/(dashBoard)/dashboard");
+      router.replace("/dashBoard");
     } catch (error: any) {
       console.error("Login Failed:", error);
       setErrorMessage(error.message || "Wrong email or password. Try again");

@@ -1,72 +1,12 @@
-// import {
-//   View,
-//   Text,
-//   TouchableOpacity,
-//   ImageBackground,
-//   Image,
-// } from "react-native";
-// import React, { useRef, useState } from "react";
-// import LoginPageLayout from "@/layouts/LoginPageLayout";
-// import { router } from "expo-router";
-// import Swiper from "react-native-swiper";
-// import { onBoardingData } from "@/constants/onBoarding";
-
-// export default function Onboarding() {
-//   const swipeRef = useRef<Swiper>(null);
-//   const [activeIndex, setActiveIndex] = useState(0);
-//   return (
-//     <LoginPageLayout>
-//       <TouchableOpacity
-//         onPress={() => router.replace("/(auth)")}
-//         className="flex items-end justify-end w-full p-5"
-//       >
-//         <Text className="font-medium text-md">Skip</Text>
-//       </TouchableOpacity>
-//       <Swiper
-//         loop={false}
-//         ref={swipeRef}
-//         dot={<View className="h-[4px] w-2 mx-1 bg-slate-100 rounded-full" />}
-//         activeDot={
-//           <View className="h-[4px] w-2 mx-1  bg-slate-300 rounded-full" />
-//         }
-//         onIndexChanged={(index) => {
-//           setActiveIndex(index);
-//         }}
-//       >
-//         {onBoardingData.map((items) => (
-//           <View key={items.id} className="">
-//             <ImageBackground source={items.image} className="h-screen">
-//               <View className="flex items-center justify-center">
-//                 <Image
-//                   source={require("@/assets/images/logo.png")}
-//                   style={{ width: 100, height: 40, resizeMode: "contain" }}
-//                 />
-//                 <View className="p-10">
-//                   <Text className="text-xl font-bold text-white">
-//                     {items.description}
-//                   </Text>
-//                 </View>
-//               </View>
-//             </ImageBackground>
-//           </View>
-//         ))}
-//       </Swiper>
-//     </LoginPageLayout>
-//   );
-// }
-// }
-
 import { router } from "expo-router";
-import { useEffect, useRef } from "react";
-import { Animated, Easing, Dimensions, Image } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Animated, Easing, Dimensions } from "react-native";
+import { checkLoginStatus } from "@/api/LoginApiClient";
 
 const { width, height } = Dimensions.get("window");
 
-export default function Onboarding({
-  onComplete = () => {},
-}: {
-  onComplete?: () => void;
-}) {
+export default function Onboarding() {
+  const [isCheckingAuth, setIsCheckingAuth] = useState(false);
   const strip1 = useRef(new Animated.Value(height + 100)).current;
   const strip2 = useRef(new Animated.Value(height + 200)).current;
   const strip3 = useRef(new Animated.Value(height + 300)).current;
@@ -80,9 +20,24 @@ export default function Onboarding({
   const logoY = useRef(new Animated.Value(height)).current;
   const logoScale = useRef(new Animated.Value(0)).current;
   const logoOpacity = useRef(new Animated.Value(0)).current;
-  const blastScale = useRef(new Animated.Value(0)).current;
-  const blastOpacity = useRef(new Animated.Value(0)).current;
   const fadeOut = useRef(new Animated.Value(1)).current;
+
+  const screenCoverScale = (Math.max(width, height) / (width * 0.5)) * 2;
+
+  const checkAuthAndNavigate = async () => {
+    setIsCheckingAuth(true);
+    try {
+      const isLoggedIn = await checkLoginStatus();
+      if (isLoggedIn) {
+        router.replace("/dashBoard");
+      } else {
+        router.replace("/(auth)");
+      }
+    } catch (error) {
+      console.error("Auth check failed:", error);
+      router.replace("/(auth)");
+    }
+  };
 
   useEffect(() => {
     Animated.sequence([
@@ -172,24 +127,13 @@ export default function Onboarding({
           easing: Easing.in(Easing.ease),
         }),
         Animated.parallel([
-          Animated.timing(logoOpacity, {
-            toValue: 0,
-            duration: 100,
-            useNativeDriver: true,
-          }),
-          Animated.timing(blastScale, {
-            toValue: Math.max(width, height) / 150,
-            duration: 600,
+          Animated.timing(logoScale, {
+            toValue: screenCoverScale,
+            duration: 800,
             useNativeDriver: true,
             easing: Easing.out(Easing.cubic),
           }),
-          Animated.timing(blastOpacity, {
-            toValue: 1,
-            duration: 50,
-            useNativeDriver: true,
-          }),
         ]),
-        Animated.delay(300),
         Animated.timing(fadeOut, {
           toValue: 0,
           duration: 400,
@@ -197,10 +141,11 @@ export default function Onboarding({
         }),
       ]),
     ]).start(() => {
-      onComplete();
-      setTimeout(() => {
-        router.replace("/(dashBoard)/dashboard");
-      }, 1000);
+      if (!isCheckingAuth) {
+        setTimeout(() => {
+          checkAuthAndNavigate();
+        }, 500);
+      }
     });
   }, [
     strip1,
@@ -214,9 +159,9 @@ export default function Onboarding({
     logoY,
     logoScale,
     logoOpacity,
-    blastScale,
-    blastOpacity,
     fadeOut,
+    isCheckingAuth,
+    screenCoverScale,
   ]);
 
   const logoSize = width * 0.5;
@@ -311,34 +256,14 @@ export default function Onboarding({
       />
 
       <Animated.View
-        className="absolute"
+        className="absolute bg-yellow-600 rounded-full"
         style={{
           width: logoSize,
           height: logoSize,
           opacity: logoOpacity,
           transform: [{ translateY: logoY }, { scale: logoScale }],
         }}
-      >
-        <Image
-          source={require("@/assets/images/logo.png")}
-          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-        />
-      </Animated.View>
-
-      <Animated.View
-        className="absolute"
-        style={{
-          width: 300,
-          height: 300,
-          opacity: blastOpacity,
-          transform: [{ scale: blastScale }],
-        }}
-      >
-        <Image
-          source={require("@/assets/images/logo.png")}
-          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-        />
-      </Animated.View>
+      />
     </Animated.View>
   );
 }

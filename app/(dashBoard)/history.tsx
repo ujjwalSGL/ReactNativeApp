@@ -1,10 +1,7 @@
 import { ImageBackground, Text, View } from "react-native";
 import React from "react";
 import Layout from "@/layouts/ScreenLayout";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 export default function history() {
-  const [checked, setChecked] = React.useState(false);
   return (
     <Layout>
       <ImageBackground
@@ -32,7 +29,7 @@ export default function history() {
             Open to any delivery
           </Text>
         </View>
-      </View>
+      </View> */}
       {/* <View>
         <ImageBackground source={require("@/assets/images")}></ImageBackground>
       </View> */}

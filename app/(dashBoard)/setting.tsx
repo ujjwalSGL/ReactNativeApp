@@ -1,4 +1,4 @@
-import { View, Text, Image, ActivityIndicator } from "react-native";
+import { View, Platform, Text, Image, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "expo-router";
@@ -29,7 +29,7 @@ export default function Setting() {
   };
 
   const handlePress = () => {
-    router.navigate("/Maintenance");
+    // router.navigate("/Maintenance");
   };
   useEffect(() => {
     setTimeout(() => {
@@ -41,7 +41,7 @@ export default function Setting() {
     <Layout>
       <View>
         <ImageBackground
-          source={require("@/assets/images/profile-bg.jpg")}
+          source={require("@/assets/images/LoginPageBackground.png")}
           style={{
             width: "auto",
             height: 120,
@@ -112,32 +112,42 @@ export default function Setting() {
             </View>
             <Text className="text-lg font-medium">Support & Help</Text>
           </TouchableOpacity>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" className="bg-blue-900 border-white">
-                <Text className="text-lg font-bold text-white">Logout</Text>
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent className="p-4 bg-white border-white w-96">
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="bg-blue-900 border-white">
-                  <TouchableOpacity>
-                    <Text className="text-lg font-medium text-white">
-                      Cancel
-                    </Text>
-                  </TouchableOpacity>
-                </AlertDialogCancel>
-                <AlertDialogAction>
-                  <TouchableOpacity onPress={handleLogout}>
-                    <Text className="text-lg font-medium">Logout</Text>
-                  </TouchableOpacity>
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          {Platform.OS === "web" ? (
+            <Button
+              variant="outline"
+              className="bg-blue-900 border-white"
+              onPress={handleLogout}
+            >
+              <Text className="text-lg font-bold text-white">Logout</Text>
+            </Button>
+          ) : (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline" className="bg-blue-900 border-white">
+                  <Text className="text-lg font-bold text-white">Logout</Text>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="p-4 bg-white border-white w-96">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-blue-900 border-white">
+                    <TouchableOpacity>
+                      <Text className="text-lg font-medium text-white">
+                        Cancel
+                      </Text>
+                    </TouchableOpacity>
+                  </AlertDialogCancel>
+                  <AlertDialogAction>
+                    <TouchableOpacity onPress={handleLogout}>
+                      <Text className="text-lg font-medium">Logout</Text>
+                    </TouchableOpacity>
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
         </View>
       )}
     </Layout>
